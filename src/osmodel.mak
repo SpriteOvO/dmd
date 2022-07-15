@@ -63,6 +63,11 @@ ifeq (,$(MODEL))
     MODEL:=64
     ARCH:=aarch64
   endif
+  ifneq (,$(findstring $(uname_M),riscv64))
+    MODEL:=64
+    ARCH:=riscv64
+    #MODEL_FLAG:=-march=rv64gc
+  endif
   ifneq (,$(findstring $(uname_M),i386 i586 i686))
     MODEL:=32
     ARCH:=x86
@@ -72,4 +77,6 @@ ifeq (,$(MODEL))
   endif
 endif
 
-MODEL_FLAG:=-m$(MODEL)
+ifeq (,$(MODEL_FLAG))
+  MODEL_FLAG:=-m$(MODEL)
+endif
